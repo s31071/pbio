@@ -1,5 +1,9 @@
+import random
+
 def generate_sequence (length: int) -> str:
     """Returns a random DNA sequence of the specified length."""
+    nucleotides = ['A', 'G', 'C', 'T']
+    return ''.join(random.choice(nucleotides) for i in range(length))
 
 def calculate_stats (sequence: str) -> dict :
     """Returns a dictionary of sequence statistics.
@@ -24,5 +28,5 @@ def main ():
     """You know."""
 
 if __name__ == "__ main __":
-    main ()
+    main()
 
