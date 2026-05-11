@@ -53,6 +53,34 @@ In case of an error, repeats the question."""
 
 def main():
     """You know."""
+    length = validate_positive_int("Enter sequence length: ")
+
+    while True:
+        seq_id = input("Enter sequence ID: ")
+        if seq_id and ' ' not in seq_id:
+            break
+        print("Error: ID cannot be empty or contain whitespace.")
+
+    description = input("Enter a description of the sequence: ")
+    name = input("Enter your name: ")
+
+    sequence = generate_sequence(length)
+    sequence_with_name = insert_name(sequence, name)
+
+    fasta_content = format_fasta(seq_id, description, sequence_with_name)
+    filename = f"{seq_id}.fasta"
+
+    with open(filename, 'w') as f:
+        f.write(fasta_content)
+
+    print(f"Sequence saved to file: {filename}")
+    stats = calculate_stats(sequence)
+
+    print(f"Sequence statistics (n={length}):")
+
+    for nuc in ['A', 'C', 'G', 'T']:
+        print(f"{nuc}: {stats[nuc]:.2f}%")
+    print(f"GC-content: {stats['GC']:.2f}%")
 
 if __name__ == "__main__":
     main()
