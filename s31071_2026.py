@@ -40,6 +40,16 @@ def validate_positive_int (prompt: str,
                           max_val : int = 100_000) -> int:
     """Gets an integer from the user in a range.
 In case of an error, repeats the question."""
+    while True:
+        user_input = input(prompt)
+        try:
+            value = int(user_input)
+            if min_val <= value <= max_val:
+                return value
+            else:
+                print(f"Error: value must be an integer in the range [{min_val}, {max_val}].")
+        except ValueError:
+            print(f"Error: value must be an integer in the range [{min_val}, {max_val}].")
 
 def main():
     """You know."""
