@@ -9,6 +9,12 @@ def calculate_stats (sequence: str) -> dict :
     """Returns a dictionary of sequence statistics.
 Keys: "A", "C", "G", "T" ( float values , %),
            "GC" ( float value , %)."""
+    total = len(sequence)
+    stats = {}
+    for nuc in ['A', 'C', 'G', 'T']:
+        stats[nuc] = (sequence.count(nuc) / total) * 100
+    stats['GC'] = stats['G'] + stats['C']
+    return stats
 
 def insert_name (sequence: str, name: str) -> str:
     """Inserts a name at a random position in the sequence.
@@ -24,9 +30,9 @@ def validate_positive_int (prompt: str,
     """Gets an integer from the user in a range.
 In case of an error, repeats the question."""
 
-def main ():
+def main():
     """You know."""
 
-if __name__ == "__ main __":
+if __name__ == "__main__":
     main()
 
