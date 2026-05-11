@@ -51,6 +51,17 @@ In case of an error, repeats the question."""
         except ValueError:
             print(f"Error: value must be an integer in the range [{min_val}, {max_val}].")
 
+#---------- additional functions ------------
+# 1. (3) searches for motif specified by the user (e.g. "ATG") and lists all the positions of occurrences
+
+def search_for_motif(sequence: str, motif: str) -> list:
+    positions = []
+    for position in range(len(sequence) - len(motif) + 1):
+        if sequence[position:position + len(motif)] == motif:
+            positions.append(position + 1)
+    return positions
+
+
 def main():
     """You know."""
     length = validate_positive_int("Enter sequence length: ")
