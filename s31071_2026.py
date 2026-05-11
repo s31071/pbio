@@ -25,6 +25,15 @@ Name written in lowercase letters."""
 def format_fasta ( seq_id : str , description : str ,
                  sequence: str, line_width : int = 80) -> str:
     """Returns a formatted FASTA record as a string."""
+    header = ">" + seq_id
+    if description:
+        header = header + " " + description
+
+    result = header + "\n"
+    for i in range(0, len(sequence), line_width):
+        line = sequence[i:i + line_width]
+        result = result + line + "\n"
+    return result
 
 def validate_positive_int (prompt: str,
                           min_val : int = 1,
