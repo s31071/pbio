@@ -61,6 +61,21 @@ def search_for_motif(sequence: str, motif: str) -> list:
             positions.append(position + 1)
     return positions
 
+# 2. (4) generates and displays the complementary strand and the reverse complementary strand
+
+def complementary(sequence: str) -> str:
+    mapping = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
+    complement = ''
+    for base in sequence:
+        if base in mapping:
+            complement += mapping[base]
+        else:
+            complement += base
+    return complement
+
+def reverse_complementary(sequence: str) -> str:
+    return complementary(sequence[::-1])
+
 
 def main():
     """You know."""
