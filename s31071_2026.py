@@ -19,6 +19,8 @@ Keys: "A", "C", "G", "T" ( float values , %),
 def insert_name (sequence: str, name: str) -> str:
     """Inserts a name at a random position in the sequence.
 Name written in lowercase letters."""
+    position = random.randint(0, len(sequence))
+    return sequence[:position] + name.lower() + sequence[position:]
 
 def format_fasta ( seq_id : str , description : str ,
                  sequence: str, line_width : int = 80) -> str:
