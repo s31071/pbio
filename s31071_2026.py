@@ -76,6 +76,10 @@ def complementary(sequence: str) -> str:
 def reverse_complementary(sequence: str) -> str:
     return complementary(sequence[::-1])
 
+#3. (5) generates an mRNA sequence (T to U replacement ) and saves it as a separate record in a FASTA file
+
+def transcribe(sequence: str) -> str:
+    return sequence.replace('T', 'U')
 
 def main():
     """You know."""
