@@ -81,6 +81,32 @@ def reverse_complementary(sequence: str) -> str:
 def transcribe(sequence: str) -> str:
     return sequence.replace('T', 'U')
 
+#4. (11) fasta validator checks format for correctness
+
+def fasta_validator(filepath: str) -> bool:
+    valid_characters = 'ACGTacgt'
+    with open(filepath) as file:
+        lines = file.readline()
+
+        if lines[0] != '>':
+            print(f"Error: expected '>' at the beggining of the fasta file")
+            return False
+
+        for i in range(1, len(lines)):
+            line = lines[i].strip()
+            if line.startswith('>'):
+                continue
+            if len(line) > 80:
+                print(f"Error: line {i} is too long")
+                return False
+            for char in line:
+                if char not in valid_characters:
+                    print(f"Error: Line {i + 1}: invalid character '{char}'.")
+                    return False
+
+        return True
+
+
 def main():
     """You know."""
     length = validate_positive_int("Enter sequence length: ")
