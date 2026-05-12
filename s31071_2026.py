@@ -84,12 +84,12 @@ def transcribe(sequence: str) -> str:
 #4. (11) fasta validator checks format for correctness
 
 def fasta_validator(filepath: str) -> bool:
-    valid_characters = 'ACGTacgt'
+    valid_characters = 'ACGTUacgtu'
     with open(filepath) as file:
         lines = file.readlines()
 
-        if lines[0] != '>':
-            print(f"Error: expected '>' at the beggining of the fasta file")
+        if lines[0][0] != '>':
+            print(f"Error: expected '>' at the beggining of the fasta file. Found: {lines[0]}")
             return False
 
         for i in range(1, len(lines)):
@@ -100,10 +100,13 @@ def fasta_validator(filepath: str) -> bool:
                 print(f"Error: line {i} is too long")
                 return False
             for char in line:
+                if char.islower():
+                    continue
                 if char not in valid_characters:
                     print(f"Error: Line {i + 1}: invalid character '{char}'.")
                     return False
 
+        print("The file is valid!")
         return True
 
 
@@ -123,9 +126,17 @@ def main():
     sequence = generate_sequence(length)
     sequence_with_name = insert_name(sequence, name)
 
-    fasta_content = format_fasta(seq_id, description, sequence_with_name)
-    filename = f"{seq_id}.fasta"
+    comp = complementary(sequence)
+    rev_comp = reverse_complementary(sequence)
+    mrna = transcribe(sequence)
 
+    fasta_content = format_fasta(seq_id, description, sequence_with_name)
+    fasta_content += format_fasta(seq_id + "_complement", "Complementary strand", comp)
+    fasta_content += format_fasta(seq_id + "_revcomp", "Reverse complementary strand", rev_comp)
+    fasta_content += format_fasta(seq_id + "_mRNA", "mRNA transcript", mrna)
+
+
+    filename = f"{seq_id}.fasta"
     with open(filename, 'w') as f:
         f.write(fasta_content)
 
@@ -137,6 +148,19 @@ def main():
     for nuc in ['A', 'C', 'G', 'T']:
         print(f"{nuc}: {stats[nuc]:.2f}%")
     print(f"GC-content: {stats['GC']:.2f}%")
+
+    motif = input("Enter motif [press ENTER to skip]: ")
+    if motif:
+        positions = search_for_motif(sequence, motif)
+        if positions:
+            print(f"Motif '{motif}' found at {positions} positions.")
+        else:
+            print(f"Motif '{motif}' not found.")
+
+
+    validator = input("Enter a path to a FASTA file to validate [press ENTER to skip]: ")
+    if validator:
+        fasta_validator(validator)
 
 if __name__ == "__main__":
     main()
