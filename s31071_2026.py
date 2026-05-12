@@ -86,7 +86,7 @@ def transcribe(sequence: str) -> str:
 def fasta_validator(filepath: str) -> bool:
     valid_characters = 'ACGTacgt'
     with open(filepath) as file:
-        lines = file.readline()
+        lines = file.readlines()
 
         if lines[0] != '>':
             print(f"Error: expected '>' at the beggining of the fasta file")
